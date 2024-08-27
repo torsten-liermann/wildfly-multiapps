@@ -2,11 +2,26 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>demo.multiapps</groupId>
+    <parent>
+        <groupId>demo.multiapps</groupId>
+        <artifactId>app-domain-finance-modules</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <artifactId>DomainFinanceEAR</artifactId> <!-- Replace with actual module name -->
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
     <dependencies>
-        <!-- List of EJB dependencies for this EAR -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>FinanceModel</artifactId>
+            <type>ejb</type>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>FinanceSchema</artifactId>
+            <type>ejb</type>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 </project>

@@ -34,10 +34,6 @@ Thumbs.db
 # Ignore classpath and other environment-specific files
 .classpath
 
-# Ignore Windows related files
-*.bat
-*.cmd
-
 # Ignore Eclipse specific files
 .buildpath
 .project
