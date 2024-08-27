@@ -7,10 +7,15 @@
         <artifactId>app-domain-solid-modules</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>DomainSolidEAR</artifactId> <!-- Replace with actual module name -->
+    <artifactId>DomainSolidEAR</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
     <dependencies>
-        <!-- List of EJB dependencies for this EAR -->
+        <dependency>
+            <groupId>demo.multiapps</groupId>
+            <artifactId>DomainSolidService</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ejb</type>
+        </dependency>
     </dependencies>
 </project>

@@ -11,23 +11,32 @@
     <artifactId>provisioning</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
+    <description>
+        How can a modularized monolith, consisting of multiple EARs and/or WARs, obtain an optimized Wildfly server
+        using the wildfly-maven-plugin, thanks to Glow and Galleon? The workaround is to use these tools directly in
+        their CLI versions. See the Maven profile "work-around."
+    </description>
+
+    <properties>
+        <version.server>33.0.0.Final</version.server>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>demo.multiapps</groupId>
-            <artifactId>app-domain-broker-ear</artifactId>
+            <artifactId>BrokerOfficeEAR</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ear</type>
         </dependency>
         <dependency>
             <groupId>demo.multiapps</groupId>
-            <artifactId>app-domain-finance-ear</artifactId>
+            <artifactId>DomainFinanceEAR</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ear</type>
         </dependency>
         <dependency>
             <groupId>demo.multiapps</groupId>
-            <artifactId>app-domain-solid-ear</artifactId>
+            <artifactId>DomainSolidEAR</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ear</type>
         </dependency>
@@ -40,8 +49,111 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>5.0.0.Final</version>
                 <configuration>
+                    <discover-provisioning-info>
+                        <version>${version.server}</version>
+                        <suggest>true</suggest>
+                    </discover-provisioning-info>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>provision</id>
+                        <goals>
+                            <goal>provision</goal>
+                        </goals>
+                        <phase>package</phase>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>work-around</id>
+            <dependencies>
+                <dependency>
+                    <groupId>org.wildfly.glow</groupId>
+                    <artifactId>wildfly-glow</artifactId>
+                    <version>1.1.0.Final</version>
+                </dependency>
+                <dependency>
+                    <groupId>org.jboss.galleon</groupId>
+                    <artifactId>galleon-cli</artifactId>
+                    <version>6.0.3.Final</version>
+                </dependency>
+            </dependencies>
+            <build>
+                <plugins>
+                    <plugin>
+                        <!--
+                        Unfortunately, Glow cannot be used together with Galleon via exec:java because the two FATs contain different versions of the same classes.
+                        -->
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>exec-maven-plugin</artifactId>
+                        <version>3.4.1</version>
+                        <configuration>
+                            <skip>false</skip>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>run-glow</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>java</executable>
+                                    <arguments>
+                                        <argument>-jar</argument>
+                                        <argument>${org.wildfly.glow:wildfly-glow:jar}</argument>
+                                        <argument>scan</argument>
+                                        <argument>../ear-1/target/ear-1-${project.version}.ear</argument>
+                                        <argument>../ear-2/target/ear-2-${project.version}.ear</argument>
+                                        <argument>--provision=PROVISIONING_XML</argument>
+                                        <argument>--output-dir=${project.build.directory}</argument>
+                                        <argument>--suggest</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>run-galleon</id>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>exec</goal>
+                                </goals>
+                                <configuration>
+                                    <executable>java</executable>
+                                    <arguments>
+                                        <argument>--add-modules=java.se</argument>
+                                        <argument>
+                                            -Dlogging.configuration=file:${project.basedir}/src/galleon/galleon-cli-logging.properties
+                                        </argument>
+                                        <argument>-jar</argument>
+                                        <argument>${org.jboss.galleon:galleon-cli:jar}</argument>
+                                        <argument>provision</argument>
+                                        <argument>${project.build.directory}/provisioning.xml</argument>
+                                        <argument>--dir=${project.build.directory}/server</argument>
+                                    </arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-dependency-plugin</artifactId>
+                        <version>3.7.1</version>
+                        <executions>
+                            <execution>
+                                <id>set-dependency-properties</id>
+                                <goals>
+                                    <goal>properties</goal>
+                                </goals>
+                                <phase>initialize</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>

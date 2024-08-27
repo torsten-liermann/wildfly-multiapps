@@ -16,6 +16,12 @@
             <artifactId>BrockerOffice</artifactId>
             <type>ejb</type>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

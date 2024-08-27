@@ -7,7 +7,7 @@
         <artifactId>app-domain-finance-modules</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>DomainFinanceEAR</artifactId> <!-- Replace with actual module name -->
+    <artifactId>DomainFinanceEAR</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
     <dependencies>
@@ -16,12 +16,24 @@
             <artifactId>FinanceModel</artifactId>
             <type>ejb</type>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>FinanceSchema</artifactId>
             <type>ejb</type>
             <version>${project.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 </project>

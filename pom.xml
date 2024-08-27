@@ -17,7 +17,22 @@
         <project.outputEncoding>UTF-8</project.outputEncoding>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
+
+        <version.server>33.0.0.Final</version.server>
     </properties>
+
+        <dependencyManagement>
+            <dependencies>
+                <!-- importing the ee-with-tools BOM adds specs and other useful artifacts as managed dependencies -->
+                <dependency>
+                    <groupId>org.wildfly.bom</groupId>
+                    <artifactId>wildfly-ee-with-tools</artifactId>
+                    <version>${version.server}</version>
+                    <type>pom</type>
+                    <scope>import</scope>
+                </dependency>
+            </dependencies>
+        </dependencyManagement>
 
     <build>
         <pluginManagement>
