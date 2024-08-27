@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>demo.multiapps</groupId>
+    <artifactId>provisioning</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>demo.multiapps</groupId>
+            <artifactId>app-domain-broker-ear</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ear</type>
+        </dependency>
+        <dependency>
+            <groupId>demo.multiapps</groupId>
+            <artifactId>app-domain-finance-ear</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ear</type>
+        </dependency>
+        <dependency>
+            <groupId>demo.multiapps</groupId>
+            <artifactId>app-domain-solid-ear</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>ear</type>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.wildfly.plugins</groupId>
+                <artifactId>wildfly-maven-plugin</artifactId>
+                <version>5.0.0.Final</version>
+                <configuration>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

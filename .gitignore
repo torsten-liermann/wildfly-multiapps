@@ -1,0 +1,44 @@
+
+# Except for the following
+!.gitignore
+
+# Ignore target directory
+target/
+
+aaa
+xxx
+
+# Ignore build output directories
+out/
+
+# Ignore IntelliJ IDEA specific files and directories
+.idea/
+*.iml
+*.ipr
+*.iws
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore temporary files
+*.tmp
+*.log
+*.swp
+
+# Ignore Maven specific files
+.mvn/
+**/src/main/generated/
+**/src/test/generated/
+
+# Ignore classpath and other environment-specific files
+.classpath
+
+# Ignore Windows related files
+*.bat
+*.cmd
+
+# Ignore Eclipse specific files
+.buildpath
+.project
+.settings/
