@@ -7,9 +7,15 @@
         <artifactId>app-domain-broker-modules</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <artifactId>BrockerOffice</artifactId> <!-- Replace with actual module name -->
+    <artifactId>BrockerOffice</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>ejb</packaging>
+    <properties>
+        <ejbVersion>3.2</ejbVersion>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.outputEncoding>UTF-8</project.outputEncoding>
+    </properties>
+
     <dependencies>
     </dependencies>
 </project>
