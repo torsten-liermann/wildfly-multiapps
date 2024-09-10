@@ -47,12 +47,31 @@
             <plugin>
                 <groupId>org.wildfly.plugins</groupId>
                 <artifactId>wildfly-maven-plugin</artifactId>
-                <version>5.0.0.Final</version>
+                <version>5.0.1.Final-SNAPSHOT</version>
                 <configuration>
                     <discover-provisioning-info>
                         <version>${version.server}</version>
                         <suggest>true</suggest>
                     </discover-provisioning-info>
+                    <!--
+                    <deployments>
+                        <dependency>
+                            <groupId>demo.multiapps</groupId>
+                            <artifactId>BrokerOfficeEAR</artifactId>
+                            <type>ear</type>
+                        </dependency>
+                        <dependency>
+                            <groupId>demo.multiapps</groupId>
+                            <artifactId>DomainFinanceEAR</artifactId>
+                            <type>ear</type>
+                        </dependency>
+                        <dependency>
+                            <groupId>demo.multiapps</groupId>
+                            <artifactId>DomainSolidEAR</artifactId>
+                            <type>ear</type>
+                        </dependency>
+                    </deployments>
+                    -->
                 </configuration>
                 <executions>
                     <execution>
